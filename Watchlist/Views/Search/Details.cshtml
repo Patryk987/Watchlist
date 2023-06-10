@@ -1,0 +1,57 @@
+@model Watchlist.Models.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>EventsViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.tvSeriesInfo.creators)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.tvSeriesInfo.creators)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.tvSeriesInfo.seasons)
+        </dt>
+        <dd class="col-sm-10">
+            <ul>
+                @foreach (var item in Model.tvSeriesInfo.seasons)
+                {
+                    <li>@item</li>
+                }
+            </ul>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.actorList)
+        </dt>
+        <dd class="col-sm-10">
+            <ul>
+                @foreach (var item in Model.actorList)
+                {
+                    <li>@item.name</li>
+                }
+            </ul>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.imDbRating)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.imDbRating)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

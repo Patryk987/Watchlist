@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Watchlist.Models.ResultsModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Wyszukiwarka</h1>
+
+<form method="get">
+    <input type="text" name="q" placeholder="szukaj" value="@ViewBag.expression" />
+    <input type="submit" value="szukaj" />
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.resultType)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Html.DisplayFor(modelItem => item.image)"
+                        style="width: 50px; height: auto; object-fit: cover" alt="">
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.resultType)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.id">Details</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
