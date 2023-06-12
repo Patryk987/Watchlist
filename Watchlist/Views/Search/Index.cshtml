@@ -48,6 +48,11 @@
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.id">Details</a>
+
+                    <form asp-action="Index">
+                        <input type="hidden" name="id" value="@item.id" />
+                        <input type="submit" value="Add to watch list" class="btn" />
+                    </form>
                 </td>
 
             </tr>

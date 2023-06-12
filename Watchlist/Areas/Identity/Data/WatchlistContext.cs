@@ -13,6 +13,9 @@ public class WatchlistContext : IdentityDbContext<WatchlistUser>
     {
     }
 
+    public DbSet<WatchListModel> WatchList { get; set; }
+    public DbSet<WatchedEpisodesModel> WatchedEpisodes { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -21,5 +24,4 @@ public class WatchlistContext : IdentityDbContext<WatchlistUser>
         // Add your customizations after calling base.OnModelCreating(builder);
     }
 
-    public DbSet<Watchlist.Models.SeriesModel> SeriesModel { get; set; } = default!;
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Watchlist.Data;
 
@@ -11,9 +12,11 @@ using Watchlist.Data;
 namespace Watchlist.Migrations
 {
     [DbContext(typeof(WatchlistContext))]
-    partial class WatchlistContextModelSnapshot : ModelSnapshot
+    [Migration("20230611132018_init3")]
+    partial class init3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,52 +227,6 @@ namespace Watchlist.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Watchlist.Models.WatchListModel", b =>
-                {
-                    b.Property<string>("id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IMDbId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartWatch")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("WatchList");
-                });
-
-            modelBuilder.Entity("Watchlist.Models.WatchedEpisodesModel", b =>
-                {
-                    b.Property<string>("id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IMDbEmpisodesId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsWatched")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("WatchDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("WatchListModelid")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("WatchListModelid");
-
-                    b.ToTable("WatchedEpisodes");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -319,18 +276,6 @@ namespace Watchlist.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Watchlist.Models.WatchedEpisodesModel", b =>
-                {
-                    b.HasOne("Watchlist.Models.WatchListModel", null)
-                        .WithMany("Episodes")
-                        .HasForeignKey("WatchListModelid");
-                });
-
-            modelBuilder.Entity("Watchlist.Models.WatchListModel", b =>
-                {
-                    b.Navigation("Episodes");
                 });
 #pragma warning restore 612, 618
         }

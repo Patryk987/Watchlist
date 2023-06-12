@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Watchlist.Data;
 
@@ -11,9 +12,11 @@ using Watchlist.Data;
 namespace Watchlist.Migrations
 {
     [DbContext(typeof(WatchlistContext))]
-    partial class WatchlistContextModelSnapshot : ModelSnapshot
+    [Migration("20230611132844_init5")]
+    partial class init5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,10 +239,6 @@ namespace Watchlist.Migrations
                     b.Property<DateTime>("StartWatch")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("id");
 
                     b.ToTable("WatchList");
@@ -254,10 +253,7 @@ namespace Watchlist.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsWatched")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("WatchDate")
+                    b.Property<DateTime>("Watch")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("WatchListModelid")
