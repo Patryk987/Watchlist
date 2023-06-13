@@ -51,6 +51,8 @@
 
                     <form asp-action="Index">
                         <input type="hidden" name="id" value="@item.id" />
+                        <input type="hidden" name="Title" value="@item.title" />
+                        <input type="hidden" name="Status" value="0" />
                         <input type="submit" value="Add to watch list" class="btn" />
                     </form>
                 </td>

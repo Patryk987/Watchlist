@@ -120,7 +120,9 @@ namespace Watchlist.Controllers
                 id = Guid.NewGuid().ToString(),
                 UserId = userData.Id,
                 IMDbId = inputData.id,
-                StartWatch = new DateTime()
+                Title = inputData.Title,
+                Status = inputData.Status,
+                StartWatch = DateTime.Now
             };
 
             _DbContext.WatchList.Add(dataToDatabase);
