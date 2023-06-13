@@ -32,44 +32,15 @@ namespace Watchlist.Controllers
             if (q != null)
             {
 
-                string apiUrl = $"https://imdb-api.com/en/API/Search/{_apiKey}/{q}";
-                using (HttpClient client = new HttpClient())
+                var searchData = await IMDbRepository.Search(q);
+
+                if (searchData != null)
                 {
-                    try
-                    {
-                        HttpResponseMessage response = await client.GetAsync(apiUrl);
-                        response.EnsureSuccessStatusCode();
 
-                        string responseBody = await response.Content.ReadAsStringAsync();
+                    return View(searchData);
 
-                        var data = JsonConvert.DeserializeObject<IMDbModel>(responseBody);
-
-                        ViewBag.expression = data.expression;
-
-                        List<ResultsModel> results = new List<ResultsModel>();
-
-                        foreach (var item in data.results)
-                        {
-                            results.Add(new ResultsModel()
-                            {
-                                id = item.id,
-                                resultType = item.resultType,
-                                image = item.image,
-                                title = item.title,
-                                description = item.description,
-                            });
-
-                        }
-
-
-                        return View(results);
-                    }
-                    catch (HttpRequestException e)
-                    {
-                        Console.WriteLine($"Wystąpił błąd podczas pobierania danych: {e.Message}");
-                    }
                 }
-                return NotFound();
+
             }
             else
             {
@@ -77,32 +48,20 @@ namespace Watchlist.Controllers
                 return View(results);
             }
 
+            return NotFound();
+
         }
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> DetailsAsync(string id)
         {
-            string apiUrl = $"https://imdb-api.com/en/API/Title/{_apiKey}/{id}";
 
-            using (HttpClient client = new HttpClient())
+            var details = await IMDbRepository.GetDetails(id);
+
+            if (details != null)
             {
-                try
-                {
-                    HttpResponseMessage response = await client.GetAsync(apiUrl);
-                    response.EnsureSuccessStatusCode();
-
-                    string responseBody = await response.Content.ReadAsStringAsync();
-
-                    var data = JsonConvert.DeserializeObject<DetailsModel>(responseBody);
-
-
-                    return View(data);
-                }
-                catch (HttpRequestException e)
-                {
-                    Console.WriteLine($"Wystąpił błąd podczas pobierania danych: {e.Message}");
-                }
+                return View(details);
             }
 
             return NotFound();

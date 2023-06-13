@@ -31,13 +31,19 @@ namespace Watchlist.Controllers
             return View(results);
         }
 
-        // [Authorize]
-        // [HttpGet]
-        // public async Task<IActionResult> Details(string id)
-        // {
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            var userData = await _userManager.GetUserAsync(HttpContext.User);
+            var result = await _DbContext.WatchList.Where(x => x.id == id)
+                                                    .Where(c => c.UserId == userData.Id)
+                                                    .Include("Episodes")
+                                                    .FirstOrDefaultAsync();
 
+            return View(result);
 
-        // }
+        }
 
     }
 }
