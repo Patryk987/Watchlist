@@ -13,8 +13,6 @@ namespace Watchlist.Controllers
     public class SearchController : Controller
     {
         private readonly ILogger<SearchController> _logger;
-        private readonly string _apiKey = "k_r3d4g61z";
-
         private readonly WatchlistContext _DbContext;
         private readonly UserManager<WatchlistUser> _userManager;
 
@@ -27,12 +25,14 @@ namespace Watchlist.Controllers
 
 
         [Authorize]
-        public async Task<IActionResult> IndexAsync(string q)
+        public async Task<IActionResult> IndexAsync(string parameter)
         {
-            if (q != null)
+            if (parameter != null)
             {
 
-                var searchData = await IMDbRepository.Search(q);
+                ViewBag.SomeProperty = parameter;
+
+                var searchData = await IMDbRepository.Search(parameter);
 
                 if (searchData != null)
                 {

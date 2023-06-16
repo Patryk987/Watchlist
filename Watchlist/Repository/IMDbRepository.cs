@@ -84,6 +84,34 @@ namespace Watchlist
 
             return null;
 
+        }
+        public static async Task<EpisodesListModel> GetEpisodesList(string filmId, int SeasonNumber)
+        {
+            string apiUrl = $"https://imdb-api.com/en/API/SeasonEpisodes/{_apiKey}/{filmId}/{SeasonNumber}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    EpisodesListModel results = new EpisodesListModel();
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+                    response.EnsureSuccessStatusCode();
+
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    results = JsonConvert.DeserializeObject<EpisodesListModel>(responseBody);
+
+                    return results;
+
+                }
+                catch (HttpRequestException e)
+                {
+                    Console.WriteLine($"Wystąpił błąd podczas pobierania danych: {e.Message}");
+                }
+            }
+
+            return null;
+
 
         }
 

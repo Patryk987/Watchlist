@@ -41,7 +41,56 @@ namespace Watchlist.Controllers
                                                     .Include("Episodes")
                                                     .FirstOrDefaultAsync();
 
+            ViewBag.Episodes = await IMDbRepository.GetEpisodesList(result.IMDbId, 1);
+            ViewBag.SeriesDetails = await IMDbRepository.GetDetails(result.IMDbId);
+
             return View(result);
+
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Details(string id, WatchedEpisodesModel input)
+        {
+            await this.SaveEpisodes(input.IMDbEmpisodesId, input.IMDbSeriesId);
+
+            var userData = await _userManager.GetUserAsync(HttpContext.User);
+            var result = await _DbContext.WatchList.Where(x => x.id == id)
+                                                    .Where(c => c.UserId == userData.Id)
+                                                    .Include("Episodes")
+                                                    .FirstOrDefaultAsync();
+
+            // List<string> watchedList = new List<string> { "a", "b", "c" };
+            // List<string> watchedList = await _DbContext.WatchedEpisodes.Select(w => w.id).ToListAsync();
+
+            ViewBag.Episodes = await IMDbRepository.GetEpisodesList(result.IMDbId, 1);
+            ViewBag.SeriesDetails = await IMDbRepository.GetDetails(result.IMDbId);
+            // ViewBag.watchedList = watchedList;
+
+            return View(result);
+
+        }
+
+        private async Task<bool> SaveEpisodes(string IMDbEmpisodesId, string IMDbSeriesId)
+        {
+
+            // TODO: Zmienić na toggle / Zwracanie danych
+
+            var userData = await _userManager.GetUserAsync(HttpContext.User);
+
+            var dataToDatabase = new WatchedEpisodesModel
+            {
+                id = Guid.NewGuid().ToString(),
+                IMDbEmpisodesId = IMDbEmpisodesId,
+                IMDbSeriesId = IMDbSeriesId,
+                WatchDate = DateTime.Now,
+                IsWatched = true
+            };
+
+            _DbContext.WatchedEpisodes.Add(dataToDatabase);
+            _DbContext.SaveChanges();
+
+            return true;
 
         }
 
