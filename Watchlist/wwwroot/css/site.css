@@ -1,26 +1,60 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus,
-.btn:active:focus,
-.btn-link.nav-link:focus,
-.form-control:focus,
-.form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+:root {
+  /* Colors */
+  --primary: #f7f7f7;
+  --second: #282829;
+  --selected: #d81f26;
+  /* Other */
+  --radius: 20px;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+  background-color: var(--primary);
+  font-size: 1rem;
 }
 
 body {
-  margin-bottom: 60px;
+  min-height: 100vh;
+}
+
+main {
+  min-height: 100%;
+}
+
+header {
+  z-index: 999;
+}
+
+nav {
+  background-color: var(--second);
+}
+
+/* offcanvas */
+
+.offcanvas {
+  border-radius: 20px;
+  margin: 20px;
+}
+
+/* footer */
+
+footer {
+  background-color: var(--second);
+  padding: 10px;
+}
+
+footer p,
+footer a {
+  color: var(--primary);
+  margin: 0;
+}
+
+/* Demo */
+
+#demo {
+  margin: 5%;
+}
+
+.carousel-inner {
+  border-radius: var(--radius);
+  box-shadow: 0 0 10px var(--second);
 }
