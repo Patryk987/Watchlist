@@ -65,21 +65,21 @@
             {
                 <li>
 
+                    @if (ViewBag.watchedEpisodesList != null &&
+                   ViewBag.watchedEpisodesList.Contains(item.id))
+                    {
+                        <s>@item.title</s>
 
-
-                    @* @if (ViewBag.watchedList.Contains(item.id)) *@
-                    @* { *@
-                    <s>@item.title</s>
-                    <form method="post">
-                        <input type="hidden" name="IMDbEmpisodesId" value=" @item.id">
-                        <input type="hidden" name="IMDbSeriesId" value=" @Model.IMDbId">
-                        <input type="submit" value="Set as watched" class="btn" />
-                    </form>
-                    @* } *@
-                    @* else *@
-                    @* { *@
-                    @* <s>@item.title</s> *@
-                    @* } *@
+                    }
+                    else
+                    {
+                        @item.title
+                        <form method="post">
+                            <input type="hidden" name="IMDbEpisodesId" value="@item.id">
+                            <input type="hidden" name="IMDbSeriesId" value="@Model.IMDbId">
+                            <input type="submit" value="Set as watched" class="btn" />
+                        </form>
+                    }
 
 
 

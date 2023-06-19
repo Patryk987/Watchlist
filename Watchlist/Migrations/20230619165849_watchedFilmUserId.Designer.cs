@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Watchlist.Data;
 
@@ -11,9 +12,11 @@ using Watchlist.Data;
 namespace Watchlist.Migrations
 {
     [DbContext(typeof(WatchlistContext))]
-    partial class WatchlistContextModelSnapshot : ModelSnapshot
+    [Migration("20230619165849_watchedFilmUserId")]
+    partial class watchedFilmUserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

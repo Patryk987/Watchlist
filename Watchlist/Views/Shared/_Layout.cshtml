@@ -25,13 +25,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Search"
                                 asp-action="Index">Search</a>
-                        </li>                        
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MyWatchList"
                                 asp-action="Index">Lista oglądanych</a>
@@ -51,6 +47,14 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - Watchlist - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+        <div>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </li>
+            </ul>
+
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

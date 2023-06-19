@@ -41,6 +41,13 @@ namespace Watchlist.Controllers
                                                     .Include("Episodes")
                                                     .FirstOrDefaultAsync();
 
+            List<string> watchedEpisodesList = await _DbContext.WatchedEpisodes
+                                                                .Where(c => c.UserId == userData.Id)
+                                                                .Select(w => w.IMDbEpisodesId)
+                                                                .ToListAsync();
+
+            ViewBag.watchedEpisodesList = watchedEpisodesList;
+
             ViewBag.Episodes = await IMDbRepository.GetEpisodesList(result.IMDbId, 1);
             ViewBag.SeriesDetails = await IMDbRepository.GetDetails(result.IMDbId);
 
@@ -52,7 +59,7 @@ namespace Watchlist.Controllers
         [HttpPost]
         public async Task<IActionResult> Details(string id, WatchedEpisodesModel input)
         {
-            await this.SaveEpisodes(input.IMDbEmpisodesId, input.IMDbSeriesId);
+            await this.SaveEpisodes(input.IMDbEpisodesId, input.IMDbSeriesId);
 
             var userData = await _userManager.GetUserAsync(HttpContext.User);
             var result = await _DbContext.WatchList.Where(x => x.id == id)
@@ -60,18 +67,21 @@ namespace Watchlist.Controllers
                                                     .Include("Episodes")
                                                     .FirstOrDefaultAsync();
 
-            // List<string> watchedList = new List<string> { "a", "b", "c" };
-            // List<string> watchedList = await _DbContext.WatchedEpisodes.Select(w => w.id).ToListAsync();
+            List<string> watchedEpisodesList = await _DbContext.WatchedEpisodes
+                                                                .Where(c => c.UserId == userData.Id)
+                                                                .Select(w => w.IMDbEpisodesId)
+                                                                .ToListAsync();
+
+            ViewBag.watchedEpisodesList = watchedEpisodesList;
 
             ViewBag.Episodes = await IMDbRepository.GetEpisodesList(result.IMDbId, 1);
             ViewBag.SeriesDetails = await IMDbRepository.GetDetails(result.IMDbId);
-            // ViewBag.watchedList = watchedList;
 
             return View(result);
 
         }
 
-        private async Task<bool> SaveEpisodes(string IMDbEmpisodesId, string IMDbSeriesId)
+        private async Task<bool> SaveEpisodes(string IMDbEpisodesId, string IMDbSeriesId)
         {
 
             // TODO: Zmienić na toggle / Zwracanie danych
@@ -81,9 +91,10 @@ namespace Watchlist.Controllers
             var dataToDatabase = new WatchedEpisodesModel
             {
                 id = Guid.NewGuid().ToString(),
-                IMDbEmpisodesId = IMDbEmpisodesId,
+                IMDbEpisodesId = IMDbEpisodesId,
                 IMDbSeriesId = IMDbSeriesId,
                 WatchDate = DateTime.Now,
+                UserId = userData.Id,
                 IsWatched = true
             };
 
