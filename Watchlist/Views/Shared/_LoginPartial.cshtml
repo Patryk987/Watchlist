@@ -4,27 +4,46 @@
 @inject SignInManager<WatchlistUser> SignInManager
 @inject UserManager<WatchlistUser> UserManager
 
-<ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item">
-            <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello
-                @UserManager.GetUserName(User)!</a>
-        </li>
-        <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
-                asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link border-0">Logout</button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li>
-    }
-</ul>
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="offcanvas-body">
+        <div>
+
+            <p>Hello @UserManager.GetUserName(User)</p>
+
+        </div>
+
+
+        <div class="account_navigation">
+            <div class="button">
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+                    asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" class="nav-link btn btn-link border-0">
+                        <img src="~/img/logout.svg" alt="logout" />
+                    </button>
+                </form>
+            </div>
+            <div class="button">
+                <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                    <img src="~/img/setting.svg" alt="setting" />
+                </a>
+            </div>
+        </div>
+
+    </div>
+}
+else
+{
+
+    <div class="offcanvas-body">
+
+        <div></div>
+
+        <div class="account_navigation">
+            <a class="nav-link" class="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link" class="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </div>
+
+    </div>
+}
+

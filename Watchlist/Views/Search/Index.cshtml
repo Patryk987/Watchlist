@@ -4,55 +4,38 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Wyszukiwarka</h1>
+<div class="title">
+    <h1>Wyniki wyszukiwania dla: @ViewBag.SomeProperty</h1>
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.resultType)
-            </th>
-            <th>
+<div class="row" id="card">
 
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <img src="@Html.DisplayFor(modelItem => item.image)"
-                        style="width: 50px; height: auto; object-fit: cover" alt="">
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.resultType)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.id">Details</a>
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card" style="background-image: url('@Html.DisplayFor(modelItem => item.image)')">
 
-                    <form asp-action="Index">
-                        <input type="hidden" name="id" value="@item.id" />
-                        <input type="hidden" name="Title" value="@item.title" />
-                        <input type="hidden" name="Status" value="0" />
-                        <input type="submit" value="Add to watch list" class="btn" />
-                    </form>
-                </td>
+                <div class="data">
+                    <p class="title">@Html.DisplayFor(modelItem => item.title)</p>
+                    <p class="description">@Html.DisplayFor(modelItem => item.description)</p>
 
-            </tr>
-        }
-    </tbody>
-</table>
+                    <div class="buttons">
+                        <a asp-action="Details" asp-route-id="@item.id">Details</a>
+
+                        <form asp-action="Index">
+                            <input type="hidden" name="id" value="@item.id" />
+                            <input type="hidden" name="Title" value="@item.title" />
+                            <input type="hidden" name="Status" value="0" />
+                            <button>
+                                <img src="~/img/eye.svg" alt="Add to watch list" />
+                            </button>
+                            @* <input type="submit" value="Add to watch list" class="btn" /> *@
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
