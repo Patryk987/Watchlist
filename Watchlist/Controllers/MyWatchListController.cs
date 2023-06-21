@@ -26,7 +26,6 @@ namespace Watchlist.Controllers
         public async Task<IActionResult> Index()
         {
             var userData = await _userManager.GetUserAsync(HttpContext.User);
-            Console.WriteLine(userData.Id);
             var results = _DbContext.WatchList.Where(x => x.UserId == userData.Id).ToList();
             return View(results);
         }
@@ -78,6 +77,37 @@ namespace Watchlist.Controllers
             ViewBag.SeriesDetails = await IMDbRepository.GetDetails(result.IMDbId);
 
             return View(result);
+
+        }
+
+        // Delete
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+
+            var userData = await _userManager.GetUserAsync(HttpContext.User);
+            var results = _DbContext.WatchList.Where(w => w.id == id).FirstOrDefault();
+            return View(results);
+
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id, WatchListModel input)
+        {
+
+            var rent = _DbContext.WatchList.Where(w => w.id == id).FirstOrDefault();
+            if (rent == null)
+            {
+                return NotFound();
+            }
+
+            _DbContext.WatchList.Remove(rent);
+            _DbContext.SaveChanges();
+
+            return RedirectToAction("Index");
 
         }
 

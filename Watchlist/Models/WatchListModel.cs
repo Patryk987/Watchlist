@@ -26,6 +26,7 @@ namespace Watchlist.Models
         public string IMDbId { get; set; }
         public string UserId { get; set; }
         public string Title { get; set; }
+        public string ImageUrl { get; set; }
         public EWatchStatus Status { get; set; }
         public EType Type { get; set; } = EType.Other;
         public DateTime StartWatch { get; set; }

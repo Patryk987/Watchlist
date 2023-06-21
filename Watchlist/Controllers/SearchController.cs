@@ -81,6 +81,7 @@ namespace Watchlist.Controllers
                 IMDbId = inputData.id,
                 Title = inputData.Title,
                 Status = inputData.Status,
+                ImageUrl = inputData.ImageUrl,
                 StartWatch = DateTime.Now
             };
 
