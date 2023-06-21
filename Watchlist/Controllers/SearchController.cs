@@ -58,6 +58,7 @@ namespace Watchlist.Controllers
         {
 
             var details = await IMDbRepository.GetDetails(id);
+            ViewBag.Episodes = await IMDbRepository.GetEpisodesList(id, 1);
 
             if (details != null)
             {

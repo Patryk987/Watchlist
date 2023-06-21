@@ -7,9 +7,15 @@
   --radius: 20px;
 }
 
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
 html {
   background-color: var(--primary);
   font-size: 1rem;
+
+
 }
 
 body {
@@ -212,17 +218,17 @@ footer a {
   padding: 2.5%;
 }
 
-#card .card {
+.card {
   display: flex;
   justify-content: flex-end;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 400px;
+  height: 500px;
   border-radius: var(--radius) var(--radius) 0 0;
 }
 
-#card .card .data {
+.card .data {
   opacity: 0.5;
   transition: 0.5s;
   padding: 20px;
@@ -230,19 +236,19 @@ footer a {
   background-color: var(--second);
 }
 
-#card .card:hover .data {
+.card:hover .data {
   opacity: 1;
   transition: 0.5s;
 }
 
-#card .card .data .buttons {
+.card .data .buttons {
   display: flex;
   justify-content: space-between;
   align-items: space-between;
 }
 
-#card .card .data a,
-#card .card .data button {
+.card .data a,
+.card .data button {
   border-radius: 10px;
   color: var(--primary);
   background-color: var(--selected);
@@ -251,16 +257,16 @@ footer a {
   text-align: center;
 }
 
-#card .card .data a {
+.card .data a {
   width: 60%;
 }
 
-#card .card .data a:hover {
+.card .data a:hover {
   color: var(--selected);
   background-color: var(--primary);
 }
 
-#card .card .data form {
+.card .data form {
   width: 30%;
   overflow: hidden;
   display: flex;
@@ -268,7 +274,7 @@ footer a {
 }
 
 
-#card .card .title {
+.card .title {
   font-size: 20pt;
   font-weight: bold;
 }
@@ -279,4 +285,161 @@ footer a {
   color: var(--second);
   width: 100%;
   text-align: center;
+}
+
+/* details */
+
+#details {}
+
+#details h1,
+#details h2 {
+  color: var(--second);
+  font-weight: bold;
+}
+
+#details .ratings {
+  display: flex;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  align-items: center;
+  font-weight: bold;
+  color: white;
+}
+
+#details .ratings .imdb_rating {
+  width: 100px;
+  height: 40px;
+  margin: 10px;
+  background-color: #f5c518;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#details .ratings .metacritics_rating {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#details>*>*>.image {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#details .image img {
+  /* width: 100%; */
+  max-width: 100%;
+  max-height: 100vh;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: 0 0 10px var(--second);
+}
+
+#details .scroller {
+  width: 100%;
+  overflow-y: auto;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+#details .scroller>div {
+  width: auto;
+  display: flex;
+  flex-shrink: unset;
+  flex-wrap: nowrap;
+}
+
+#details .scroller>div .card {
+  min-width: 300px;
+  max-width: 300px;
+  width: 300px;
+  margin-right: 50px;
+}
+
+/* episodes */
+
+.episodes>ul {
+  display: flex;
+  padding: 0;
+  justify-content: center;
+}
+
+.episodes>ul li {
+  list-style-type: none;
+  width: 50px;
+  height: 50px;
+  background-color: var(--second);
+  color: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--second);
+  cursor: pointer;
+}
+
+.episodes>ul li:hover {
+  background-color: var(--primary);
+  color: var(--second);
+}
+
+.episodes>ul li:first {
+  border-radius: 20px;
+}
+
+.episodes_list .episodes {
+  display: flex;
+  height: 150px;
+  margin: 25px 0 25px 0;
+  display: flex;
+  align-items: center;
+}
+
+.episodes_list .episodes .image {
+  min-width: 300px;
+  min-height: 100px;
+
+}
+
+.episodes_list .episodes .image img {
+  width: 250px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.episodes>.details {
+  color: var(--second)
+}
+
+.episodes>.details>.title {
+  font-size: 15pt;
+  font-weight: bold;
+}
+
+.episodes>.details>.production_year {
+  font-size: 8pt;
+}
+
+.episodes>.details>.plot {
+  font-size: 12pt;
+  line-height: 100%;
+}
+
+.episodes>.details>.rating {
+  font-size: 8pt;
 }

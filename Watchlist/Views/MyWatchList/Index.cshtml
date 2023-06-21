@@ -4,60 +4,6 @@
     ViewData["Title"] = "Index";
 }
 
-@* <h1>Index</h1>
-
-<p>
-<a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-<thead>
-<tr>
-<th>
-@Html.DisplayNameFor(model => model.ImageUrl)
-</th>
-<th>
-@Html.DisplayNameFor(model => model.Title)
-</th>
-<th>
-@Html.DisplayNameFor(model => model.IMDbId)
-</th>
-<th>
-@Html.DisplayNameFor(model => model.StartWatch)
-</th>
-<th>
-@Html.DisplayNameFor(model => model.Status)
-</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-@foreach (var item in Model)
-{
-<tr>
-<td>
-<img src="@Html.DisplayFor(modelItem => item.ImageUrl)" style="width: 100px" />
-</td>
-<td>
-@Html.DisplayFor(modelItem => item.Title)
-</td>
-<td>
-@Html.DisplayFor(modelItem => item.IMDbId)
-</td>
-<td>
-@Html.DisplayFor(modelItem => item.StartWatch)
-</td>
-<td>
-@Html.DisplayFor(modelItem => item.Status)
-</td>
-<td>
-<a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-<a asp-action="Details" asp-route-id="@item.id">Details</a> |
-<a asp-action="Delete" asp-route-id="@item.id">Delete</a>
-</td>
-</tr>
-}
-</tbody>
-</table> *@
 <div class="title">
     <h1>Your watch list</h1>
 </div>
@@ -65,7 +11,7 @@
 <div class="row" id="card">
     @foreach (var item in Model)
     {
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card" style="background-image: url('@Html.DisplayFor(modelItem => item.ImageUrl)')">
 
                 <div class="data">

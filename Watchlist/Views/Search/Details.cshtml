@@ -4,54 +4,147 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<section id="details">
 
-<div>
-    <h4>Details</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.tvSeriesInfo.creators)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.tvSeriesInfo.creators)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.tvSeriesInfo.seasons)
-        </dt>
-        <dd class="col-sm-10">
-            <ul>
-                @foreach (var item in Model.tvSeriesInfo.seasons)
+    <div class="row">
+
+        <div class='col-md-4'>
+            <div class="image">
+                <img src="@Html.DisplayFor(model => model.image)"
+                    alt="@Html.DisplayFor(model => model.title) - poster" />
+            </div>
+        </div>
+
+        <div class='col-md-8'>
+
+            <div class="ratings">
+                @if (Model.imDbRating != null)
                 {
-                    <li>@item</li>
+                    <div class="imdb_rating">
+                        @Html.DisplayFor(model => model.imDbRating) / 100
+                    </div>
                 }
-            </ul>
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.actorList)
-        </dt>
-        <dd class="col-sm-10">
-            <ul>
-                @foreach (var item in Model.actorList)
+                @if (Model.metacriticRating != null)
                 {
-                    <li>@item.name</li>
+                    <div class="metacritics_rating">
+                        @Html.DisplayFor(model => model.metacriticRating)
+                    </div>
                 }
-            </ul>
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.imDbRating)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.imDbRating)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+            </div>
+
+            <h1>@Html.DisplayFor(model => model.title)</h1>
+
+            <p>
+                @Html.DisplayFor(model => model.plot)
+            </p>
+
+            @if (Model.tvSeriesInfo != null)
+            {
+                <div class="episodes">
+
+                    <h2>Episodes</h2>
+
+                    <ul>
+                        @foreach (var item in Model.tvSeriesInfo.seasons)
+                        {
+                            <li>@item</li>
+                        }
+                    </ul>
+
+                    <div class="episodes_list">
+                        @foreach (var item in ViewBag.Episodes.episodes)
+                        {
+                            <div class="episodes">
+                                <div class="image">
+                                    <img src="@item.image" alt="@item.title - poster" />
+                                </div>
+                                <div class="details">
+
+                                    <h3 class="title">@item.title</h3>
+                                    <p class="production_year">@item.year</p>
+                                    <p class="plot">@item.plot</p>
+
+                                    <div class="rating">
+                                        @item.imDbRating
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+
+                </div>
+
+            }
+
+            <div class="actors">
+
+                <h2>Actors</h2>
+
+                <div class="scroller">
+                    <div>
+
+                        @foreach (var item in Model.actorList)
+                        {
+
+                            <div class="card" style="background-image: url('@Html.DisplayFor(modelItem => item.image)')">
+
+                                <div class="data">
+
+                                    <p class="title">@item.name</p>
+                                    <p class="description">as @item.asCharacter</p>
+
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+
+            @if (Model.similars != null)
+            {
+
+                <div class="similar">
+
+                    <h2>Similar films</h2>
+
+                    <div class="scroller">
+                        <div>
+
+                            @foreach (var item in Model.similars)
+                            {
+
+                                <div class="card" style="background-image: url('@item.image')">
+
+                                    <div class="data">
+
+                                        <p class="title">@item.title</p>
+                                        <p class="rating">@item.imDbRating / 100</p>
+
+                                        <div class="buttons">
+                                            <a asp-action="Details" asp-route-id="@item.id">Details</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+</section>
