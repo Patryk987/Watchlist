@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 
 namespace Watchlist.Models
 {
     public class DetailsModel
     {
+        [Key]
         public string id { get; set; }
         public string title { get; set; }
         public string? originalTitle { get; set; }

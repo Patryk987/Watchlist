@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 
 namespace Watchlist.Models
 {
     public class EpisodesModel
     {
+        [Key]
         public string id { get; set; }
         public string seasonNumber { get; set; }
         public string episodeNumber { get; set; }

@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 
 namespace Watchlist.Models
 {
     public class EpisodesListModel
     {
+        [Key]
         public string imDbId { get; set; }
         public string title { get; set; }
         public string fullTitle { get; set; }

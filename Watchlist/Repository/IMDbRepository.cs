@@ -10,6 +10,7 @@ namespace Watchlist
     {
 
         // TODO: PRzenieść api key na zewnątrz
+        // private static readonly string _apiKey = "k_x0m7e6a5";
         private static readonly string _apiKey = "k_r3d4g61z";
 
         public static async Task<List<ResultsModel>> Search(string title)
@@ -59,8 +60,6 @@ namespace Watchlist
         {
             string apiUrl = $"https://imdb-api.com/en/API/Title/{_apiKey}/{filmId}";
 
-
-
             using (HttpClient client = new HttpClient())
             {
                 try
@@ -103,6 +102,62 @@ namespace Watchlist
 
                     return results;
 
+                }
+                catch (HttpRequestException e)
+                {
+                    Console.WriteLine($"Wystąpił błąd podczas pobierania danych: {e.Message}");
+                }
+            }
+
+            return null;
+
+
+        }
+        public static async Task<List<NewsListModel>> GetNews()
+        {
+            string apiUrl = $"https://imdb-api.com/en/API/ComingSoon/{_apiKey}";
+
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    List<NewsListModel> results = new List<NewsListModel>();
+
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+                    response.EnsureSuccessStatusCode();
+
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    var data = JsonConvert.DeserializeObject<NewsModel>(responseBody);
+
+
+                    int count = 0;
+
+                    foreach (var item in data.items)
+                    {
+                        results.Add(new NewsListModel()
+                        {
+                            id = item.id,
+                            title = item.title,
+                            fullTitle = item.fullTitle,
+                            year = item.year,
+                            releaseState = item.releaseState,
+                            image = item.image,
+                            plot = item.plot,
+                            genres = item.genres,
+                        });
+
+                        count++;
+
+                        if (count >= 10)
+                        {
+                            break;
+                        }
+
+                    }
+
+                    return results;
                 }
                 catch (HttpRequestException e)
                 {

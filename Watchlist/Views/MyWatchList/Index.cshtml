@@ -20,7 +20,9 @@
 
                     <div class="buttons">
                         <a asp-action="Details" asp-route-id="@item.id">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                        <a asp-action="Delete" asp-route-id="@item.id" class="delete">
+                            <img src="~/img/trash.svg" alt="trash" />
+                        </a>
                     </div>
                 </div>
             </div>

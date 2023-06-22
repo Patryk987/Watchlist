@@ -7,6 +7,7 @@ using Watchlist.Models;
 using Microsoft.AspNetCore.Identity;
 using Watchlist.Areas.Identity.Data;
 using Watchlist.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Watchlist.Controllers
 {
@@ -75,21 +76,34 @@ namespace Watchlist.Controllers
         {
             var userData = await _userManager.GetUserAsync(HttpContext.User);
 
-            var dataToDatabase = new WatchListModel
+            var result = await _DbContext.WatchList.Where(x => x.IMDbId == inputData.id)
+                                                    .Where(c => c.UserId == userData.Id)
+                                                    .FirstOrDefaultAsync();
+            if (result != null)
             {
-                id = Guid.NewGuid().ToString(),
-                UserId = userData.Id,
-                IMDbId = inputData.id,
-                Title = inputData.Title,
-                Status = inputData.Status,
-                ImageUrl = inputData.ImageUrl,
-                StartWatch = DateTime.Now
-            };
 
-            _DbContext.WatchList.Add(dataToDatabase);
-            _DbContext.SaveChanges();
+                return RedirectToAction("Index", "MyWatchList");
 
-            return RedirectToAction("Index");
+            }
+            else
+            {
+                var dataToDatabase = new WatchListModel
+                {
+                    id = Guid.NewGuid().ToString(),
+                    UserId = userData.Id,
+                    IMDbId = inputData.id,
+                    Title = inputData.Title,
+                    Status = inputData.Status,
+                    ImageUrl = inputData.ImageUrl,
+                    StartWatch = DateTime.Now
+                };
+
+                _DbContext.WatchList.Add(dataToDatabase);
+                _DbContext.SaveChanges();
+
+                // return RedirectToAction("Index");
+                return RedirectToAction("Index", "MyWatchList");
+            }
 
         }
 

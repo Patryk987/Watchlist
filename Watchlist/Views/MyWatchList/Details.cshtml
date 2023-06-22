@@ -4,93 +4,193 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<section id="details">
 
-<div>
-    <h4>WatchListModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IMDbId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IMDbId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StartWatch)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StartWatch)
-        </dd>
-    </dl>
+    <div class="row">
 
-    <div class="seriesDetails">
+        <div class='col-md-4'>
+            <div class="image">
+                <img src="@ViewBag.SeriesDetails.image" alt="@ViewBag.SeriesDetails.title - poster" />
+            </div>
+        </div>
 
-        @* @await Html.PartialAsync("../Search/Details.cshtml", ViewBag.SeriesDetails as IList<DetailsModel>) *@
+        <div class='col-md-8'>
 
-        <p>@ViewBag.SeriesDetails.title</p>
+            <div class="ratings">
 
-    </div>
-    <div class="elpisodesList">
+                @if (ViewBag.SeriesDetails.imDbRating != null)
+                {
+                    <div class="imdb_rating">
+                        @ViewBag.SeriesDetails.imDbRating / 100
+                    </div>
+                }
 
-        @* ViewBag.Episodes *@
+                @if (ViewBag.SeriesDetails.metacriticRating != null)
+                {
+                    <div class="metacritics_rating">
+                        @ViewBag.SeriesDetails.metacriticRating
+                    </div>
+                }
 
-        <ul>
 
-            @foreach (var item in ViewBag.Episodes.episodes)
+            </div>
+
+            <h1>@ViewBag.SeriesDetails.title</h1>
+            @using (Html.BeginForm("UpdateStatus", "MyWatchList", FormMethod.Post))
             {
-                <li>
 
-                    @if (ViewBag.watchedEpisodesList != null &&
-                   ViewBag.watchedEpisodesList.Contains(item.id))
+                <input type="hidden" name="id" value="@Model.id">
+                <select name="Status">
+                    @foreach (var option in ViewBag.WatchStatusOptions)
                     {
-                        <s>@item.title</s>
-
+                        if (Model.Status.Equals(option.Value))
+                        {
+                            <option value="@option.Value" selected>@option.Text</option>
+                        }
+                        else
+                        {
+                            <option value="@option.Value">@option.Text</option>
+                        }
                     }
-                    else
-                    {
-                        @item.title
-                        <form method="post">
-                            <input type="hidden" name="IMDbEpisodesId" value="@item.id">
-                            <input type="hidden" name="IMDbSeriesId" value="@Model.IMDbId">
-                            <input type="submit" value="Set as watched" class="btn" />
-                        </form>
-                    }
-
-
-
-                </li>
+                </select>
+                <button>
+                    Save
+                </button>
             }
 
-        </ul>
+
+            <p>
+                @ViewBag.SeriesDetails.plot
+            </p>
+
+            @if (ViewBag.SeriesDetails.tvSeriesInfo != null)
+            {
+                <div class="episodes">
+
+                    <h2>Episodes</h2>
+
+                    <ul>
+
+                        @foreach (var item in ViewBag.SeriesDetails.tvSeriesInfo.seasons)
+                        {
+                            var styleActive = (ViewBag.Seasons == @item) ? "active" : "unactive";
+
+                            <li class="@styleActive">
+                                <a href="?seasons=@item">
+                                    @item
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+
+                    <div class="episodes_list">
+                        @foreach (var item in ViewBag.Episodes.episodes)
+                        {
+                            var styleWchatched = (ViewBag.watchedEpisodesList != null &&
+                            ViewBag.watchedEpisodesList.Contains(item.id)) ? "watched" : "unwatched";
+
+                            <div class="episodes">
+                                <div class="image">
+                                    <img src="@item.image" alt="@item.title - poster" />
+                                </div>
+                                <div class="details">
+
+                                    <h3 class="title">@item.title</h3>
+                                    <p class="production_year">@item.year | @item.imDbRating</p>
+                                    <p class="plot">@item.plot</p>
+
+                                </div>
+                                <div class="whatch">
+
+                                    @* <form method="post"> *@
+                                    @using (Html.BeginForm("Details", "MyWatchList", FormMethod.Post))
+                                    {
+                                        <input type="hidden" name="IMDbEpisodesId" value="@item.id">
+                                        <input type="hidden" name="IMDbSeriesId" value="@Model.IMDbId">
+                                        <button class="@styleWchatched">
+                                            <img src="~/img/eye.svg" alt="Add to watch list" />
+                                        </button>
+                                    }
+                                    @* </form> *@
+
+
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+
+                </div>
+
+            }
+
+            <div class="actors">
+
+                <h2>Actors</h2>
+
+                <div class="scroller">
+                    <div>
+
+                        @foreach (var item in ViewBag.SeriesDetails.actorList)
+                        {
+
+                            <div class="card" style="background-image: url('@item.image')">
+
+                                <div class="data">
+
+                                    <p class="title">@item.name</p>
+                                    <p class="description">as @item.asCharacter</p>
+
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+
+            @if (ViewBag.SeriesDetails.similars != null)
+            {
+
+                <div class="similar">
+
+                    <h2>Similar films</h2>
+
+                    <div class="scroller">
+                        <div>
+
+                            @foreach (var similarItem in ViewBag.SeriesDetails.similars)
+                            {
+
+                                <div class="card" style="background-image: url('@similarItem.image')">
+
+                                    <div class="data">
+
+                                        <p class="title">@similarItem.title</p>
+                                        <p class="rating">@similarItem.imDbRating / 100</p>
+
+                                        <div class="buttons">
+                                            <a asp-action="Details" asp-route-id="@similarItem.id">Details</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
 
     </div>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+</section>

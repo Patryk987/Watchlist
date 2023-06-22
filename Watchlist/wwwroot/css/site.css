@@ -2,7 +2,7 @@
   /* Colors */
   --primary: #f7f7f7;
   --second: #282829;
-  --selected: #d81f26;
+  --selected: #d72f37;
   /* Other */
   --radius: 20px;
 }
@@ -116,6 +116,43 @@ nav {
   stroke: var(--second) !important;
 }
 
+/* menage_setting */
+
+#menage_setting {
+  padding: 5%;
+}
+
+#menage_setting .nav-link {
+  color: var(--second) !important
+}
+
+#menage_setting .nav-link.active {
+  background-color: var(--selected) !important;
+  color: var(--primary) !important;
+}
+
+
+
+#menage_setting button,
+#menage_setting .btn {
+  background-color: var(--selected);
+  border-radius: 5px;
+  align-items: center;
+  outline: 0;
+  border: 0;
+  box-shadow: 0 0 5px var(--second);
+}
+
+#menage_setting button:hover,
+#menage_setting .btn:hover {
+  background-color: var(--primary);
+  color: var(--selected)
+}
+
+#menage_setting .btn-danger {
+  background-color: red;
+}
+
 /* footer */
 
 footer {
@@ -132,12 +169,69 @@ footer a {
 /* Demo */
 
 #demo {
-  margin: 5%;
+  padding: 5%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#demo .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 50vh;
+}
+
+#demo img {
+  height: auto;
+  max-width: 25vw;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: 0 0 10px var(--second);
 }
 
 .carousel-inner {
+  height: 50vh;
+  overflow: visible;
+  /* height: 100vh; */
+}
+
+.carousel-inner .details {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary)
+}
+
+.carousel-item {
+  background-color: var(--second);
   border-radius: var(--radius);
-  box-shadow: 0 0 10px var(--second);
+
+}
+
+.carousel-indicators button {
+  background-color: var(--second) !important;
+}
+
+.carousel-item button {
+  border: 3px solid var(--selected);
+  border-radius: 10px;
+  color: var(--primary);
+  background-color: var(--selected);
+  padding: 10px;
+  text-decoration: none;
+  text-align: center;
+}
+
+#last_watch {
+  margin: 5%;
+}
+
+#last_watch h2 {
+  margin-bottom: 75px;
+  font-weight: bold;
 }
 
 /* Login Screen */
@@ -226,6 +320,7 @@ footer a {
   background-repeat: no-repeat;
   height: 500px;
   border-radius: var(--radius) var(--radius) 0 0;
+  box-shadow: 0 0 5px var(--second);
 }
 
 .card .data {
@@ -245,6 +340,20 @@ footer a {
   display: flex;
   justify-content: space-between;
   align-items: space-between;
+}
+
+.card .data a,
+.card .data button {
+  border-radius: 10px;
+  color: var(--primary);
+  background-color: var(--selected);
+  padding: 10px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.card .data .delete {
+  width: 50px
 }
 
 .card .data a,
@@ -393,13 +502,30 @@ footer a {
   cursor: pointer;
 }
 
+.episodes>ul li a {
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.episodes>ul li.active {
+  background-color: var(--selected);
+}
+
 .episodes>ul li:hover {
   background-color: var(--primary);
   color: var(--second);
 }
 
-.episodes>ul li:first {
-  border-radius: 20px;
+.episodes>ul li:hover a {
+  color: var(--second);
+}
+
+.episodes>ul li:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+.episodes>ul li:last-child {
+  border-radius: 0 10px 10px 0;
 }
 
 .episodes_list .episodes {
@@ -423,12 +549,14 @@ footer a {
 }
 
 .episodes>.details {
-  color: var(--second)
+  color: var(--second);
+  width: 100%;
 }
 
 .episodes>.details>.title {
   font-size: 15pt;
   font-weight: bold;
+  text-align: justify;
 }
 
 .episodes>.details>.production_year {
@@ -442,4 +570,23 @@ footer a {
 
 .episodes>.details>.rating {
   font-size: 8pt;
+}
+
+.episodes .whatch {
+  padding: 20px;
+}
+
+.episodes button {
+  border-radius: 10px;
+  color: var(--primary);
+  padding: 10px;
+  text-decoration: none;
+  text-align: center;
+  border: 1px solid var(--second);
+  background-color: var(--second);
+}
+
+.episodes button.watched {
+  background-color: var(--selected);
+  border-color: var(--selected);
 }
